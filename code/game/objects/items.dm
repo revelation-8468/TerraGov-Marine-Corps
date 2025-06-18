@@ -1483,12 +1483,25 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 			color_selection = tgui_input_list(user, "Pick a color", "Pick color", colorable_colors)
 			if(!color_selection)
 				return
+
 			if(islist(colorable_colors[color_selection]))
 				var/old_list = colorable_colors[color_selection]
 				color_selection = tgui_input_list(user, "Pick a color", "Pick color", old_list)
 				if(!color_selection)
 					return
-				new_color = old_list[color_selection]
+
+				if(color_selection == "Match Planet")
+					var/armor_style = SSticker.mode?.get_map_color_variant() || SSmapping.configs[GROUND_MAP]?.armor_style
+					if(armor_style == MAP_ARMOR_STYLE_JUNGLE)
+						new_color = LEGACY_ARMOR_PALETTE_DRAB
+					else if(armor_style == MAP_ARMOR_STYLE_DESERT)
+						new_color = LEGACY_ARMOR_PALETTE_DESERT
+					else if(armor_style == MAP_ARMOR_STYLE_ICE)
+						new_color = LEGACY_ARMOR_PALETTE_SNOW
+					else
+						new_color = LEGACY_ARMOR_PALETTE_BLACK
+				else
+					new_color = old_list[color_selection]
 			else
 				new_color = colorable_colors[color_selection]
 		if(COLOR_WHEEL)

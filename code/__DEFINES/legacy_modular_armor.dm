@@ -1,4 +1,3 @@
-
 //Default
 #define LEGACY_ARMOR_PALETTE_DRAB "#241d16#363021#444732#665f44#80706a"
 #define LEGACY_ARMOR_PALETTE_WOOD "#000000#362325#594F3A#816853#A3957E"
@@ -83,90 +82,91 @@
 #define LEGACY_ARMOR_PALETTE_CHARLIE "#29184c#562763#703481#9747ac#d45aac"
 
 #define LEGACY_ARMOR_PALETTES_LIST list(\
-		"Default Armor" = list(\
-			"Drab" = LEGACY_ARMOR_PALETTE_DRAB,\
-			"Brown" = LEGACY_ARMOR_PALETTE_BROWN,\
-			"Wood" = LEGACY_ARMOR_PALETTE_WOOD,\
-			"Snow" = LEGACY_ARMOR_PALETTE_SNOW,\
-			"Ice" = LEGACY_ARMOR_PALETTE_ICE,\
-			"Storm" = LEGACY_ARMOR_PALETTE_STORM,\
-			"Desert" = LEGACY_ARMOR_PALETTE_DESERT,\
-			"Black" = LEGACY_ARMOR_PALETTE_BLACK,\
-			"Grey" = LEGACY_ARMOR_PALETTE_GREY,\
-			"Silver" = LEGACY_ARMOR_PALETTE_SILVER,\
-			"Gun Metal" = LEGACY_ARMOR_PALETTE_GUN_METAL,\
-			"Night Slate" = LEGACY_ARMOR_PALETTE_NIGHT_SLATE,\
-			"Fall" = LEGACY_ARMOR_PALETTE_FALL,\
-			"Steel" = LEGACY_ARMOR_PALETTE_STEEL,\
-			"Nightshade" = LEGACY_ARMOR_PALETTE_NIGHTSHADE,\
-			"Syndicate Black" = LEGACY_ARMOR_PALETTE_SYNDIE_BLACK,\
-		),\
-		"Pink" = list(\
-			"Pearl Pink" = LEGACY_ARMOR_PALETTE_PEARL_PINK,\
-			"Mountbatten" = LEGACY_ARMOR_PALETTE_MOUNTBATTEN,\
-			"Coral" = LEGACY_ARMOR_PALETTE_CORAL_PINK,\
-			"Azalea" = LEGACY_ARMOR_PALETTE_AZALEA_PINK,\
-		),\
-		"Red" = list(\
-			"Red" = LEGACY_ARMOR_PALETTE_LIGHT_RED,\
-			"Blood Red" = LEGACY_ARMOR_PALETTE_BLOOD_RED,\
-			"Dark Red" = LEGACY_ARMOR_PALETTE_RED,\
-			"Copper" = LEGACY_ARMOR_PALETTE_COPPER,\
-			"Alpha" = LEGACY_ARMOR_PALETTE_ALPHA,\
-			"Syndicate Red" = LEGACY_ARMOR_PALETTE_SYNDIE_RED,\
-			"Gorlex Red" = LEGACY_ARMOR_PALETTE_GORLEX_RED,\
-		),\
-		"Orange" = list(\
-			"Orange" = LEGACY_ARMOR_PALETTE_ORANGE,\
-			"Hazard" = LEGACY_ARMOR_PALETTE_HAZARD,\
-			"Blaze" = LEGACY_ARMOR_PALETTE_BLAZE,\
-			"Persimmon" = LEGACY_ARMOR_PALETTE_PERSIMMON,\
-			"Ginger" = LEGACY_ARMOR_PALETTE_GINGER,\
-			"Earth" = LEGACY_ARMOR_PALETTE_EARTH,\
-		),\
-		"Yellow" = list(\
-			"Yellow" = LEGACY_ARMOR_PALETTE_LIGHT_YELLOW,\
-			"Gold" = LEGACY_ARMOR_PALETTE_YELLOW,\
-			"Olive" = LEGACY_ARMOR_PALETTE_OLIVE,\
-			"Angelic Gold" = LEGACY_ARMOR_PALETTE_ANGELIC,\
-			"Cathay Spice" = LEGACY_ARMOR_PALETTE_CATHAY,\
-			"Bravo" = LEGACY_ARMOR_PALETTE_BRAVO,\
-		),\
-		"Green" = list(\
-			"Green" = LEGACY_ARMOR_PALETTE_GREEN,\
-			"Lime" = LEGACY_ARMOR_PALETTE_LIME,\
-			"Forest" = LEGACY_ARMOR_PALETTE_FOREST,\
-			"Pine" = LEGACY_ARMOR_PALETTE_PINE,\
-			"Emerald" = LEGACY_ARMOR_PALETTE_EMERALD,\
-			"Mint" = LEGACY_ARMOR_PALETTE_MINT,\
-			"Kelly Green" = LEGACY_ARMOR_PALETTE_KELLY_GREEN,\
-			"Leaf" = LEGACY_ARMOR_PALETTE_LEAF,\
-			"Greyish Turquoise" = LEGACY_ARMOR_PALETTE_GREYISH_TURQUOISE,\
-			"Rifle Green" = LEGACY_ARMOR_PALETTE_RIFLE_GREEN,\
-		),\
-		"Blue" = list(\
-			"Blue" = LEGACY_ARMOR_PALETTE_NAVY,\
-			"Turquoise" = LEGACY_ARMOR_PALETTE_LIGHT_BLUE,\
-			"Teal" = LEGACY_ARMOR_PALETTE_TEAL,\
-			"Sea Blue" = LEGACY_ARMOR_PALETTE_SEA_BLUE,\
-			"Cloud" = LEGACY_ARMOR_PALETTE_CLOUD,\
-			"Cornflower" = LEGACY_ARMOR_PALETTE_CORNFLOWER,\
-			"Stone Blue" = LEGACY_ARMOR_PALETTE_STONE_BLUE,\
-			"Dark Blue" = LEGACY_ARMOR_PALETTE_BLUE,\
-			"Delta" = LEGACY_ARMOR_PALETTE_DELTA,\
-			"Dark Blue" = LEGACY_ARMOR_PALETTE_DARK_BLUE,\
-			"Space Cadet" = LEGACY_ARMOR_PALETTE_SPACE_CADET,\
-		),\
-		"Purple" = list(\
-			"Purple" = LEGACY_ARMOR_PALETTE_IRIS_PURPLE,\
-			"Violet" = LEGACY_ARMOR_PALETTE_VIOLET,\
-			"Heron" = LEGACY_ARMOR_PALETTE_HERON,\
-			"Lilac" = LEGACY_ARMOR_PALETTE_LILAC,\
-			"Grape" = LEGACY_ARMOR_PALETTE_GRAPE,\
-			"Red Violet" = LEGACY_ARMOR_PALETTE_MAGENTA,\
-			"Charlie" = LEGACY_ARMOR_PALETTE_CHARLIE,\
-		),\
-	)
+        "Default Armor" = list(\
+			"Match Planet",\
+            "Drab" = LEGACY_ARMOR_PALETTE_DRAB,\
+            "Brown" = LEGACY_ARMOR_PALETTE_BROWN,\
+            "Wood" = LEGACY_ARMOR_PALETTE_WOOD,\
+            "Snow" = LEGACY_ARMOR_PALETTE_SNOW,\
+            "Ice" = LEGACY_ARMOR_PALETTE_ICE,\
+            "Storm" = LEGACY_ARMOR_PALETTE_STORM,\
+            "Desert" = LEGACY_ARMOR_PALETTE_DESERT,\
+            "Black" = LEGACY_ARMOR_PALETTE_BLACK,\
+            "Grey" = LEGACY_ARMOR_PALETTE_GREY,\
+            "Silver" = LEGACY_ARMOR_PALETTE_SILVER,\
+            "Gun Metal" = LEGACY_ARMOR_PALETTE_GUN_METAL,\
+            "Night Slate" = LEGACY_ARMOR_PALETTE_NIGHT_SLATE,\
+            "Fall" = LEGACY_ARMOR_PALETTE_FALL,\
+            "Steel" = LEGACY_ARMOR_PALETTE_STEEL,\
+            "Nightshade" = LEGACY_ARMOR_PALETTE_NIGHTSHADE,\
+            "Syndicate Black" = LEGACY_ARMOR_PALETTE_SYNDIE_BLACK,\
+        ),\
+        "Pink" = list(\
+            "Pearl Pink" = LEGACY_ARMOR_PALETTE_PEARL_PINK,\
+            "Mountbatten" = LEGACY_ARMOR_PALETTE_MOUNTBATTEN,\
+            "Coral" = LEGACY_ARMOR_PALETTE_CORAL_PINK,\
+            "Azalea" = LEGACY_ARMOR_PALETTE_AZALEA_PINK,\
+        ),\
+        "Red" = list(\
+            "Red" = LEGACY_ARMOR_PALETTE_LIGHT_RED,\
+            "Blood Red" = LEGACY_ARMOR_PALETTE_BLOOD_RED,\
+            "Dark Red" = LEGACY_ARMOR_PALETTE_RED,\
+            "Copper" = LEGACY_ARMOR_PALETTE_COPPER,\
+            "Alpha" = LEGACY_ARMOR_PALETTE_ALPHA,\
+            "Syndicate Red" = LEGACY_ARMOR_PALETTE_SYNDIE_RED,\
+            "Gorlex Red" = LEGACY_ARMOR_PALETTE_GORLEX_RED,\
+        ),\
+        "Orange" = list(\
+            "Orange" = LEGACY_ARMOR_PALETTE_ORANGE,\
+            "Hazard" = LEGACY_ARMOR_PALETTE_HAZARD,\
+            "Blaze" = LEGACY_ARMOR_PALETTE_BLAZE,\
+            "Persimmon" = LEGACY_ARMOR_PALETTE_PERSIMMON,\
+            "Ginger" = LEGACY_ARMOR_PALETTE_GINGER,\
+            "Earth" = LEGACY_ARMOR_PALETTE_EARTH,\
+        ),\
+        "Yellow" = list(\
+            "Yellow" = LEGACY_ARMOR_PALETTE_LIGHT_YELLOW,\
+            "Gold" = LEGACY_ARMOR_PALETTE_YELLOW,\
+            "Olive" = LEGACY_ARMOR_PALETTE_OLIVE,\
+            "Angelic Gold" = LEGACY_ARMOR_PALETTE_ANGELIC,\
+            "Cathay Spice" = LEGACY_ARMOR_PALETTE_CATHAY,\
+            "Bravo" = LEGACY_ARMOR_PALETTE_BRAVO,\
+        ),\
+        "Green" = list(\
+            "Green" = LEGACY_ARMOR_PALETTE_GREEN,\
+            "Lime" = LEGACY_ARMOR_PALETTE_LIME,\
+            "Forest" = LEGACY_ARMOR_PALETTE_FOREST,\
+            "Pine" = LEGACY_ARMOR_PALETTE_PINE,\
+            "Emerald" = LEGACY_ARMOR_PALETTE_EMERALD,\
+            "Mint" = LEGACY_ARMOR_PALETTE_MINT,\
+            "Kelly Green" = LEGACY_ARMOR_PALETTE_KELLY_GREEN,\
+            "Leaf" = LEGACY_ARMOR_PALETTE_LEAF,\
+            "Greyish Turquoise" = LEGACY_ARMOR_PALETTE_GREYISH_TURQUOISE,\
+            "Rifle Green" = LEGACY_ARMOR_PALETTE_RIFLE_GREEN,\
+        ),\
+        "Blue" = list(\
+            "Blue" = LEGACY_ARMOR_PALETTE_NAVY,\
+            "Turquoise" = LEGACY_ARMOR_PALETTE_LIGHT_BLUE,\
+            "Teal" = LEGACY_ARMOR_PALETTE_TEAL,\
+            "Sea Blue" = LEGACY_ARMOR_PALETTE_SEA_BLUE,\
+            "Cloud" = LEGACY_ARMOR_PALETTE_CLOUD,\
+            "Cornflower" = LEGACY_ARMOR_PALETTE_CORNFLOWER,\
+            "Stone Blue" = LEGACY_ARMOR_PALETTE_STONE_BLUE,\
+            "Dark Blue" = LEGACY_ARMOR_PALETTE_BLUE,\
+            "Delta" = LEGACY_ARMOR_PALETTE_DELTA,\
+            "Dark Blue" = LEGACY_ARMOR_PALETTE_DARK_BLUE,\
+            "Space Cadet" = LEGACY_ARMOR_PALETTE_SPACE_CADET,\
+        ),\
+        "Purple" = list(\
+            "Purple" = LEGACY_ARMOR_PALETTE_IRIS_PURPLE,\
+            "Violet" = LEGACY_ARMOR_PALETTE_VIOLET,\
+            "Heron" = LEGACY_ARMOR_PALETTE_HERON,\
+            "Lilac" = LEGACY_ARMOR_PALETTE_LILAC,\
+            "Grape" = LEGACY_ARMOR_PALETTE_GRAPE,\
+            "Red Violet" = LEGACY_ARMOR_PALETTE_MAGENTA,\
+            "Charlie" = LEGACY_ARMOR_PALETTE_CHARLIE,\
+        ),\
+    )
 
 
 #define LEGACY_PALETTES_TO_NEW list( \
