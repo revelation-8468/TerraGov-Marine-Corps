@@ -28,8 +28,6 @@ GLOBAL_VAR(common_report) //Contains common part of roundend report
 	var/deploy_time_lock = 15 MINUTES
 	///The respawn time for marines
 	var/respawn_time = 30 MINUTES
-	//The respawn time for Xenomorphs
-	var/xenorespawn_time = 5 MINUTES
 	///How many points do you need to win in a point gamemode
 	var/win_points_needed = 0
 	///The points per faction, assoc list
@@ -49,8 +47,8 @@ GLOBAL_VAR(common_report) //Contains common part of roundend report
 	var/tier_three_penalty = 0
 	///Includes T3 xenos in the calculation for maximum T3 slots.
 	var/tier_three_inclusion = FALSE
-	///Caste Swap Timer
-	var/caste_swap_timer = 15 MINUTES
+	///How often you can caste swap
+	var/caste_swap_cooldown = 15 MINUTES
 	///List of castes we dont want to be evolvable depending on gamemode.
 	var/list/restricted_castes
 
@@ -72,6 +70,8 @@ GLOBAL_VAR(common_report) //Contains common part of roundend report
 	var/list/blacklist_ground_maps = list(MAP_DELTA_STATION, MAP_RESEARCH_OUTPOST, MAP_LV_624, MAP_WHISKEY_OUTPOST, MAP_OSCAR_OUTPOST, MAP_FORT_PHOBOS, MAP_CHIGUSA, MAP_LAVA_OUTPOST, MAP_CORSAT)
 	///if fun tads are enabled by default
 	var/enable_fun_tads = FALSE
+
+	var/roundstart_players = 0
 
 
 /datum/game_mode/New()
@@ -110,6 +110,10 @@ GLOBAL_VAR(common_report) //Contains common part of roundend report
 		GLOB.landmarks_round_start.len--
 		L.after_round_start()
 
+	// Determine roundstart player count, used for population locks.
+	SSticker.mode.roundstart_players = length(GLOB.clients)
+	to_chat(world, "Round initialized with a Population of [SSticker.mode.roundstart_players]")
+	SSblackbox.record_feedback("text", "initial_players", 1, SSticker.mode.roundstart_players)
 	for(var/datum/job/job AS in valid_job_types)
 		job = SSjob.GetJobType(job)
 		if(!job) //dunno how or why but it errored in ci and i couldnt reproduce on local
@@ -433,6 +437,14 @@ GLOBAL_LIST_INIT(bioscan_locations, list(
 		parts += "[GLOB.round_statistics.all_acid_applied] objects vomitted on with corrosive acid."
 	if(GLOB.round_statistics.trap_holes)
 		parts += "[GLOB.round_statistics.trap_holes] holes for acid and huggers were made."
+	if(GLOB.round_statistics.drone_acidic_salve)
+		parts += "[GLOB.round_statistics.drone_acidic_salve] health points restored through Drone's Acidic Salve."
+	if(GLOB.round_statistics.drone_acidic_salve_sunder)
+		parts += "[GLOB.round_statistics.drone_acidic_salve_sunder] sunder removed through Drone's Acidic Salve."
+	if(GLOB.round_statistics.drone_essence_link)
+		parts += "[GLOB.round_statistics.drone_essence_link] health points restored through Drone's Essence Link."
+	if(GLOB.round_statistics.drone_essence_link_sunder)
+		parts += "[GLOB.round_statistics.drone_essence_link_sunder] sunder removed through Drone's Essence Link."
 	if(GLOB.round_statistics.sentinel_drain_stings)
 		parts += "[GLOB.round_statistics.sentinel_drain_stings] number of times Sentinel drain sting was used."
 	if(GLOB.round_statistics.defender_charge_victims)
@@ -515,6 +527,8 @@ GLOBAL_LIST_INIT(bioscan_locations, list(
 		parts += "[GLOB.round_statistics.psy_shields] number of times Warlocks used psychic shield."
 	if(GLOB.round_statistics.psy_shield_blasts)
 		parts += "[GLOB.round_statistics.psy_shield_blasts] number of times Warlocks detonated a psychic shield."
+	if(GLOB.round_statistics.transfusion_overheal)
+		parts += "[GLOB.round_statistics.transfusion_overheal] points of overhealing were given by Gorgers through Transfusion."
 	if(GLOB.round_statistics.larva_from_psydrain)
 		parts += "[GLOB.round_statistics.larva_from_psydrain] larvas came from psydrain."
 	if(GLOB.round_statistics.larva_from_silo)
@@ -573,6 +587,8 @@ GLOBAL_LIST_INIT(bioscan_locations, list(
 			if(H.status_flags & XENO_HOST)
 				continue
 			if(H.faction == FACTION_XENO)
+				continue
+			if(H.faction == FACTION_ZOMBIE)
 				continue
 			if(isspaceturf(H.loc))
 				continue
@@ -993,13 +1009,13 @@ GLOBAL_LIST_INIT(bioscan_locations, list(
 		CRASH("Warning: Current map has too few nuke disk generators to correctly generate disks for set \">[chosen_disk_set]<\". Make sure both generators and json are set up correctly.")
 	if(length(forced_disks) > length(GLOB.nuke_disk_generator_types))
 		CRASH("Warning: Current map has too many forced disks for the current set type \">[chosen_disk_set]<\". Amount is [length(forced_disks)]. Please revisit your disk candidates.")
-	for(var/obj/machinery/computer/nuke_disk_generator AS in GLOB.nuke_disk_generator_types)
+	for(var/obj/machinery/computer/disk_generator AS in GLOB.nuke_disk_generator_types)
 		var/spawn_loc
 		if(length(forced_disks))
 			spawn_loc = pick_n_take(forced_disks)
 		else
 			spawn_loc = pick_n_take(viable_disks)
-		new nuke_disk_generator(get_turf(spawn_loc))
+		new disk_generator(get_turf(spawn_loc))
 		qdel(spawn_loc)
 
 /// Add gamemode related items to statpanel
@@ -1017,7 +1033,6 @@ GLOBAL_LIST_INIT(bioscan_locations, list(
 
 	if (source.can_wait_in_larva_queue())
 		handle_larva_timer(dcs, source, items)
-		handle_xeno_respawn_timer(dcs, source, items)
 
 /// Displays the orphan hivemind collapse timer, if applicable
 /datum/game_mode/proc/handle_collapse_timer(datum/dcs, mob/source, list/items)
@@ -1041,15 +1056,6 @@ GLOBAL_LIST_INIT(bioscan_locations, list(
 	var/stored_larva = xeno_job.total_positions - xeno_job.current_positions
 	if(stored_larva)
 		items += "Burrowed larva: [stored_larva]"
-
-/// Displays your xeno respawn timer, if applicable
-/datum/game_mode/proc/handle_xeno_respawn_timer(datum/dcs, mob/source, list/items)
-	if(GLOB.respawn_allowed)
-		var/status_value = ((GLOB.key_to_time_of_xeno_death[source.key] ? GLOB.key_to_time_of_xeno_death[source.key] : -INFINITY)  + SSticker.mode?.xenorespawn_time - world.time) * 0.1 //If xeno_death is null, use -INFINITY
-		if(status_value <= 0)
-			items += "Xeno respawn timer: READY"
-		else
-			items += "Xeno respawn timer: [(status_value / 60) % 60]:[add_leading(num2text(status_value % 60), 2, "0")]"
 
 ///Returns a list of verbs to give ghosts in this gamemode
 /datum/game_mode/proc/ghost_verbs(mob/dead/observer/observer)

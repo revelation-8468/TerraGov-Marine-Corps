@@ -89,13 +89,16 @@
 	if(!client)
 		return FALSE
 
+/// Updates the `health` variable and anything associated with it.
 /mob/living/proc/updatehealth()
+	SEND_SIGNAL(src, COMSIG_LIVING_UPDATE_HEALTH)
 	if(status_flags & GODMODE)
 		health = maxHealth
 		stat = CONSCIOUS
-		return
+		return FALSE
 	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 	update_stat()
+	return TRUE
 
 /mob/living/update_stat()
 	. = ..()
@@ -391,7 +394,7 @@
 		if(!(L.status_flags & CANPUSH))
 			return
 
-	if(ismovableatom(A))
+	if(ismovable(A))
 		if(isxeno(src) && ishuman(A))
 			var/mob/living/carbon/human/H = A
 			if(!COOLDOWN_FINISHED(H,  xeno_push_delay))

@@ -41,9 +41,11 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(
 		SMOOTH_GROUP_CLOSED_TURFS,
+		SMOOTH_GROUP_WALLS,
 		SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS,
 	)
 	canSmoothWith = list(
+		SMOOTH_GROUP_WALLS,
 		SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS,
 		SMOOTH_GROUP_AIRLOCK,
 		SMOOTH_GROUP_WINDOW_FRAME,
@@ -507,7 +509,7 @@
 			log_combat(user, grabbed_mob, "crushed", "", "against [src]")
 			grabbed_mob.Paralyze(2 SECONDS)
 			user.drop_held_item()
-	grabbed_mob.apply_damage(damage, blocked = MELEE, updating_health = TRUE)
+	grabbed_mob.apply_damage(damage, blocked = MELEE, updating_health = TRUE, attacker = user)
 	take_damage(damage, BRUTE, MELEE)
 	playsound(src, SFX_SLAM, 40)
 	return TRUE

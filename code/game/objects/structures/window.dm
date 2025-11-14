@@ -24,7 +24,6 @@
 	var/windowknock_cooldown = 0
 	var/static_frame = FALSE //If true, can't move the window
 	var/junction = 0 //Because everything is terrible, I'm making this a window-level var
-	var/damageable = TRUE
 	var/deconstructable = TRUE
 
 /obj/structure/window/add_debris_element()
@@ -87,7 +86,7 @@
 		throw_damage *= thrown_mob.mob_size * 8
 	take_damage(throw_damage)
 	if(obj_integrity > 0) //we only stop if we don't break the window
-		AM.stop_throw()
+		AM.set_throwing(FALSE)
 		. = TRUE
 	if(thrown_mob)
 		thrown_mob.take_overall_damage(speed * 5, BRUTE, MELEE, !., FALSE, TRUE, 0, 4) //done here for dramatic effect, and to make the damage sharp if we broke the window
@@ -154,7 +153,7 @@
 			grabbed_mob.visible_message(span_danger("<big>[user] crushes [grabbed_mob] against \the [src]!</big>"))
 			log_combat(user, grabbed_mob, "crushed", "", "against \the [src]")
 			grabbed_mob.Paralyze(2 SECONDS)
-	grabbed_mob.apply_damage(damage, blocked = MELEE, updating_health = TRUE)
+	grabbed_mob.apply_damage(damage, blocked = MELEE, updating_health = TRUE, attacker = user)
 	take_damage(damage * 2, BRUTE, MELEE)
 	return TRUE
 
@@ -412,6 +411,7 @@
 		SMOOTH_GROUP_WINDOW_FRAME,
 		SMOOTH_GROUP_ESCAPESHUTTLE,
 	)
+	minimap_color = MINIMAP_FENCE
 	///For perspective windows,so the window frame doesn't magically disappear.
 	var/window_frame
 
@@ -469,7 +469,6 @@
 	name = "hull window"
 	desc = "A glass window with a special rod matrice inside a wall frame. This one was made out of exotic materials to prevent hull breaches. No way to get through here."
 	//icon_state = "rwindow0_debug" //Uncomment to check hull in the map editor
-	damageable = FALSE
 	deconstructable = FALSE
 	resistance_flags = RESIST_ALL
 	icon_state = "window-invincible"
@@ -534,7 +533,6 @@
 /obj/structure/window/framed/mainship/gray/toughened/hull
 	name = "hull window"
 	desc = "A glass window with a special rod matrice inside a wall frame. This one was made out of exotic materials to prevent hull breaches. No way to get through here."
-	damageable = FALSE
 	deconstructable = FALSE
 	resistance_flags = RESIST_ALL
 	icon_state = "window-invincible"
@@ -543,7 +541,6 @@
 	name = "hull window"
 	icon_state = "window-invincible"
 	desc = "A glass window with a special rod matrice inside a wall frame. This one was made out of exotic materials to prevent hull breaches. No way to get through here."
-	damageable = FALSE
 	deconstructable = FALSE
 	resistance_flags = RESIST_ALL
 
@@ -580,7 +577,6 @@
 	name = "hull window"
 	desc = "A glass window with a special rod matrice inside a wall frame. This one was made out of exotic materials to prevent hull breaches. No way to get through here."
 	//icon_state = "rwindow0_debug" //Uncomment to check hull in the map editor
-	damageable = FALSE
 	deconstructable = FALSE
 	resistance_flags = RESIST_ALL
 	max_integrity = 1000000 //Failsafe, shouldn't matter
@@ -665,7 +661,6 @@
 /obj/structure/window/framed/prison/reinforced/nonshutter_hull
 	name = "hull window"
 	desc = "A glass window with a special rod matrice inside a wall frame. This one was made out of exotic materials to prevent hull breaches. No way to get through here."
-	damageable = FALSE
 	deconstructable = FALSE
 	resistance_flags = RESIST_ALL
 

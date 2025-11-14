@@ -79,7 +79,7 @@ Contains most of the procs that are called when a mob is attacked by something
 	. = ..()
 	if(!.)
 		return
-	if(CHECK_BITFIELD(S.smoke_traits, SMOKE_CAMO))
+	if((S.smoke_traits & SMOKE_CAMO) && !(S.smoke_traits & SMOKE_XENO))
 		smokecloak_on()
 
 /mob/living/carbon/human/inhale_smoke(obj/effect/particle_effect/smoke/S)
@@ -156,7 +156,7 @@ Contains most of the procs that are called when a mob is attacked by something
 	if(weapon_sharp)
 		new /obj/effect/temp_visual/dir_setting/bloodsplatter(loc, Get_Angle(user, src), get_blood_color())
 
-	apply_damage(applied_damage, I.damtype, target_zone, 0, weapon_sharp, weapon_edge, updating_health = TRUE)
+	apply_damage(applied_damage, I.damtype, target_zone, 0, weapon_sharp, weapon_edge, updating_health = TRUE, attacker = user)
 
 	var/list/hit_report = list("(RAW DMG: [damage])")
 
@@ -234,7 +234,7 @@ Contains most of the procs that are called when a mob is attacked by something
 			apply_damage(throw_damage, BRUTE, BODY_ZONE_CHEST, MELEE, updating_health = TRUE)
 		if(thrown_mob.mob_size <= mob_size)
 			thrown_mob.apply_damage(speed, BRUTE, BODY_ZONE_CHEST, MELEE, updating_health = TRUE)
-		thrown_mob.stop_throw()
+		thrown_mob.set_throwing(FALSE)
 
 	else if(isitem(AM))
 		var/obj/item/thrown_item = AM
@@ -267,7 +267,7 @@ Contains most of the procs that are called when a mob is attacked by something
 		if(thrown_item.thrower != src)
 			throw_damage = check_shields(COMBAT_MELEE_ATTACK, throw_damage, MELEE)
 			if(!throw_damage)
-				thrown_item.stop_throw()
+				thrown_item.set_throwing(FALSE)
 				visible_message(span_danger("[src] deflects \the [thrown_item]!"))
 				if(living_thrower)
 					log_combat(living_thrower, src, "thrown at", thrown_item, "(FAILED: shield blocked)")
@@ -279,7 +279,7 @@ Contains most of the procs that are called when a mob is attacked by something
 			log_combat(living_thrower, src, "thrown at", thrown_item, "(FAILED: target limb missing)")
 			return FALSE
 
-		thrown_item.stop_throw() // Hit the limb.
+		thrown_item.set_throwing(FALSE) // Hit the limb.
 		var/applied_damage = modify_by_armor(throw_damage, MELEE, thrown_item.penetration, zone)
 
 		if(applied_damage <= 0)
@@ -327,6 +327,8 @@ Contains most of the procs that are called when a mob is attacked by something
 	if(!.)
 		return
 	if(stat || (species.species_flags & NO_PAIN))
+		return
+	if(soft_armor.getRating(FIRE) > 80) //Lets not spam screams if you are barely taking any damage
 		return
 	if(prob(75))
 		return
@@ -414,6 +416,9 @@ Contains most of the procs that are called when a mob is attacked by something
 	var/obj/item/organ/heart/heart = new
 	heart.die()
 	user.put_in_hands(heart)
+	if(iszombie(src))
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(fade_out), heart), 9.5 SECONDS)
+		QDEL_IN(heart, 10 SECONDS)
 	chestburst = CARBON_CHEST_BURSTED
 	update_burst()
 
@@ -429,15 +434,15 @@ Contains most of the procs that are called when a mob is attacked by something
 		return TRUE
 
 	if(!(affecting.limb_status & LIMB_ROBOT))
-		balloon_alert(user, "Limb not robotic")
+		balloon_alert(user, "limb not robotic!")
 		return TRUE
 
 	if(!affecting.brute_dam)
-		balloon_alert(user, "Nothing to fix!")
+		balloon_alert(user, "nothing to fix!")
 		return TRUE
 
 	if(user.do_actions)
-		balloon_alert(user, "Already busy!")
+		balloon_alert(user, "busy!")
 		return TRUE
 
 	if(!I.tool_use_check(user, 2))
@@ -468,6 +473,6 @@ Contains most of the procs that are called when a mob is attacked by something
 				affecting = checked_limb
 				break
 			if(previous_limb == affecting)
-				balloon_alert(user, "Dents fully repaired.")
+				balloon_alert(user, "dents fully repaired")
 				break
 	return TRUE

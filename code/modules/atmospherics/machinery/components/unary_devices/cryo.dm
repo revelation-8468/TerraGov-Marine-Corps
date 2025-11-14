@@ -11,8 +11,8 @@
 	pipe_flags = PIPING_ONE_PER_TURF|PIPING_DEFAULT_LAYER_ONLY
 	interaction_flags = INTERACT_MACHINE_TGUI
 	can_see_pipes = FALSE
-	light_range = 2
-	light_power = 0.5
+	light_range = 3
+	light_power = 0.6
 	light_color = LIGHT_COLOR_EMISSIVE_GREEN
 
 	var/autoeject = FALSE
@@ -44,7 +44,7 @@
 	initialize_directions = dir
 	beaker = new /obj/item/reagent_containers/glass/beaker/cryomix
 	radio = new(src)
-	update_icon()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/proc/process_occupant()
 	if(!occupant)
@@ -320,29 +320,6 @@
 	occupant.time_entered_cryo = world.time
 	update_icon()
 	return TRUE
-
-/obj/machinery/atmospherics/components/unary/cryo_cell/Topic(href, href_list)
-	. = ..()
-	if(.)
-		return
-	if (!href_list["scanreport"])
-		return
-	if(!hasHUD(usr,"medical"))
-		return
-	if(get_dist(usr, src) > 7)
-		to_chat(usr, span_warning("[src] is too far away."))
-		return
-	if(!ishuman(occupant))
-		return
-	var/mob/living/carbon/human/H = occupant
-	for(var/datum/data/record/R in GLOB.datacore.medical)
-		if (!R.fields["name"] == H.real_name)
-			continue
-		if(R.fields["last_scan_time"] && R.fields["last_scan_result"])
-			var/datum/browser/popup = new(usr, "scanresults", "<div align='center'>Last Scan Result</div>", 430, 600)
-			popup.set_content(R.fields["last_scan_result"])
-			popup.open(FALSE)
-		break
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/attack_hand(mob/living/user)
 	. = ..()

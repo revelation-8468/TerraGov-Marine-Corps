@@ -107,7 +107,7 @@
 	proj.proj_max_range -= 2
 
 /datum/ammo/energy/bfg/on_hit_turf(turf/target_turf, atom/movable/projectile/proj)
-	proj.proj_max_range -= 2
+	proj.proj_max_range -= 10
 
 /datum/ammo/energy/bfg/drop_nade(turf/T)
 	explosion(T, 0, 0, 4, 0, 0, explosion_cause=src)
@@ -146,8 +146,7 @@
 	damage = 20
 	penetration = 10
 	max_range = 30
-	accuracy_var_low = 3
-	accuracy_var_high = 3
+	accuracy_variation = 3
 	sundering = 2.5
 
 /datum/ammo/energy/lasgun/M43
@@ -178,8 +177,7 @@
 	bonus_projectiles_type = /datum/ammo/energy/lasgun/M43/spread
 	bonus_projectiles_amount = 2
 	bonus_projectiles_scatter = 10
-	accuracy_var_low = 9
-	accuracy_var_high = 9
+	accuracy_variation = 9
 	accurate_range = 5
 	max_range = 5
 	damage = 42
@@ -191,8 +189,7 @@
 	name = "additional laser blast"
 	icon_state = "laser2"
 	shell_speed = 2
-	accuracy_var_low = 9
-	accuracy_var_high = 9
+	accuracy_variation = 9
 	accurate_range = 5
 	max_range = 5
 	damage = 35
@@ -312,8 +309,7 @@
 	bonus_projectiles_type = /datum/ammo/energy/lasgun/marine/blast/spread
 	bonus_projectiles_amount = 2
 	bonus_projectiles_scatter = 10
-	accuracy_var_low = 9
-	accuracy_var_high = 9
+	accuracy_variation = 9
 	accurate_range = 3
 	max_range = 8
 	damage = 35
@@ -772,8 +768,7 @@
 	damage = 40
 	penetration = 15
 	max_range = 30
-	accuracy_var_low = 3
-	accuracy_var_high = 3
+	accuracy_variation = 3
 
 /datum/ammo/energy/plasma_pistol
 	name = "ionized plasma bolt"

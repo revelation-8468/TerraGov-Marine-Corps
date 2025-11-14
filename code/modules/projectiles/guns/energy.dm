@@ -539,10 +539,10 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	equip_slot_flags = ITEM_SLOT_BELT
 	gun_skill_category = SKILL_PISTOLS
-	max_shots = 30 //codex stuff
+	max_shots = 20 //codex stuff
 	ammo_datum_type = /datum/ammo/energy/lasgun/marine/pistol
 	ammo_level_icon = null
-	rounds_per_shot = 20
+	rounds_per_shot = 30
 	gun_firemode = GUN_FIREMODE_AUTOMATIC
 	gun_firemode_list = list(GUN_FIREMODE_AUTOMATIC)
 	attachable_allowed = list(
@@ -580,7 +580,7 @@
 	starting_attachment_types = list(/obj/item/attachable/reddot, /obj/item/attachable/lasersight)
 
 /datum/lasrifle/energy_pistol_mode/standard
-	rounds_per_shot = 20
+	rounds_per_shot = 30
 	ammo_datum_type = /datum/ammo/energy/lasgun/marine/pistol
 	fire_delay = 0.15 SECONDS
 	fire_sound = 'sound/weapons/guns/fire/Laser Pistol Standard.ogg'
@@ -767,11 +767,10 @@
 		/obj/item/attachable/bayonet,
 		/obj/item/attachable/bayonet/som,
 		/obj/item/attachable/magnetic_harness,
-		/obj/item/attachable/scope/unremovable/laser_sniper_scope,
+		/obj/item/attachable/scope/laser_sniper_scope,
 		/obj/item/weapon/gun/grenade_launcher/underslung,
 		/obj/item/weapon/gun/flamer/mini_flamer,
 		/obj/item/attachable/motiondetector,
-		/obj/item/attachable/buildasentry,
 		/obj/item/weapon/gun/rifle/pepperball/pepperball_mini,
 		/obj/item/weapon/gun/flamer/hydro_cannon,
 		/obj/item/attachable/gyro,
@@ -783,7 +782,7 @@
 
 	gun_features_flags = GUN_CAN_POINTBLANK|GUN_ENERGY|GUN_AMMO_COUNTER|GUN_NO_PITCH_SHIFT_NEAR_EMPTY|GUN_AMMO_COUNT_BY_SHOTS_REMAINING
 	attachable_offset = list("muzzle_x" = 41, "muzzle_y" = 18,"rail_x" = 19, "rail_y" = 19, "under_x" = 28, "under_y" = 8, "stock_x" = 22, "stock_y" = 12)
-	starting_attachment_types = list(/obj/item/attachable/scope/unremovable/laser_sniper_scope)
+	starting_attachment_types = list(/obj/item/attachable/scope/laser_sniper_scope)
 
 	aim_slowdown = 0.7
 	wield_delay = 0.9 SECONDS
@@ -1054,7 +1053,6 @@
 	damage_falloff_mult = 0.9
 	fire_delay = 0.2 SECONDS
 	mode_list = list()
-	light_color = LIGHT_COLOR_ORANGE
 
 /obj/item/weapon/gun/energy/lasgun/lasrifle/volkite/apply_custom(mutable_appearance/standing, inhands, icon_used, state_used)
 	. = ..()
